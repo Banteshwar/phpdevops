@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My First PHP Project</title>
+    <title>My First PHP Project123</title>
 </head>
 <body>
     <h1>Welcome to My PHP Project</h1>
