@@ -7,6 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Name: " . $name . "<br>";
     echo "Email: " . $email . "<br>";
 	
-	//echo "Hello World"
+	echo "Hello World"
 }
 ?>
