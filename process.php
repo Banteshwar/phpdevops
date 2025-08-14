@@ -8,5 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Email: " . $email . "<br>";
 	
 	echo "Hello World"
+	
+	echo test
 }
 ?>
