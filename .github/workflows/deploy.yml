@@ -1,0 +1,24 @@
+name: Deploy PHP Project
+
+on:
+  push:
+    branches:
+      - main   # change if your branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy files to server
+        run: |
+          ssh -o StrictHostKeyChecking=no root@31.97.227.188 "mkdir -p /var/www/html/phpdevops"
+          rsync -avz --delete ./ root@31.97.227.188:/var/www/html/phpdevops/
