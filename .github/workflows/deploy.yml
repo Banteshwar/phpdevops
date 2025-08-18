@@ -3,7 +3,7 @@ name: Deploy PHP Project
 on:
   push:
     branches:
-      - main   # change if your branch is different
+      - main   # or your default branch
 
 jobs:
   deploy:
@@ -18,7 +18,14 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy files to server
+      - name: Deploy files to VPS
         run: |
-          ssh -o StrictHostKeyChecking=no root@31.97.227.188 "mkdir -p /var/www/html/phpdevops"
-          rsync -avz --delete ./ root@31.97.227.188:/var/www/html/phpdevops/
+          ssh -o StrictHostKeyChecking=no root@31.97.227.188 "
+            if [ -d /var/www/html/phpdevops/.git ]; then
+              cd /var/www/html/phpdevops
+              git reset --hard
+              git pull origin main
+            else
+              git clone git@github.com:Banteshwar/phpdevops.git /var/www/html/phpdevops
+            fi
+          "
