@@ -24,14 +24,19 @@ jobs:
       - name: Deploy files to VPS
         run: |
           ssh -o StrictHostKeyChecking=no root@31.97.227.188 "
+            echo '--- Checking project directory ---'
             if [ -d /var/www/html/phpdevops/.git ]; then
               cd /var/www/html/phpdevops
+              echo '--- Current branch & status ---'
+              git status
+              git branch -a
+              echo '--- Resetting & pulling latest code ---'
               git reset --hard
               git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Banteshwar/phpdevops.git main
             else
+              echo '--- Fresh clone because repo not found ---'
               git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Banteshwar/phpdevops.git /var/www/html/phpdevops
             fi
+            echo '--- Final file list after deploy ---'
+            ls -la /var/www/html/phpdevops
           "
-
-      - name: Debug: List files on server
-        run: ssh -o StrictHostKeyChecking=no root@31.97.227.188 "ls -la /var/www/html/phpdevops"
