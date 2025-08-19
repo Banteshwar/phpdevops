@@ -27,8 +27,11 @@ jobs:
             if [ -d /var/www/html/phpdevops/.git ]; then
               cd /var/www/html/phpdevops
               git reset --hard
-              git pull origin main
+              git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Banteshwar/phpdevops.git main
             else
-              git clone git@github.com:Banteshwar/phpdevops.git /var/www/html/phpdevops
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Banteshwar/phpdevops.git /var/www/html/phpdevops
             fi
           "
+
+      - name: Debug: List files on server
+        run: ssh -o StrictHostKeyChecking=no root@31.97.227.188 "ls -la /var/www/html/phpdevops"
